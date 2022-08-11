@@ -4,6 +4,7 @@ import java.util.*;
 
 public class GameFunctions implements GameRepository {
 
+    Stack<Card> stack = new Stack<>();
 
     @Override
     public ArrayList<Card> createDeck() {
@@ -36,51 +37,55 @@ public class GameFunctions implements GameRepository {
             return new ArrayDeque<>(deck);
         }
 
-    @Override
-    public void battle(Deque<Card> playerCards, Deque<Card> compCards) {
-        Stack<Card> stack = new Stack<>();
 
-            while(playerCards.size() != 24 && compCards.size() != 24){
-                stack.push(playerCards.removeFirst());
-                System.out.println("Player 1 plays a card");
-                stack.push(compCards.removeFirst());
-                System.out.println("Computer plays a card");
-
-                if (stack.get(0).getCardSeniority() == stack.get(1).getCardSeniority()) {
-                    while (stack.get(stack.size() -1).getCardSeniority() == stack.get(stack.size() - 2).getCardSeniority()) {
-                        System.out.println("<<<IT'S A BATTLE!>>>");
-                        System.out.println("Player 1 plays a card");
-                        stack.push(playerCards.removeFirst());
-                        System.out.println("Computer plays a card");
-                        stack.push(compCards.removeFirst());
-                }
-                if (stack.get(0).getCardSeniority() < stack.get(1).getCardSeniority()) {
-                    System.out.println("Player1 wins the battle!");
-                    playerCards.addAll(stack);
-                    stack.clear();
-                } else {
-                    System.out.println("Computer wins the battle!");
-                    compCards.addAll(stack);
-                    stack.clear();
-                }
-
-            } else if (stack.get(0).getCardSeniority() > stack.get(1).getCardSeniority()) {
-                System.out.println("Player 1 wins the battle!");
-                playerCards.addLast(stack.get(0));
-                playerCards.addLast(stack.get(1));
-                stack.clear();
-            } else {
-                System.out.println("Computer wins the battle!");
-                compCards.addLast(stack.get(1));
-                compCards.addLast(stack.get(0));
-                stack.clear();
-                }
+    public void cardPlaying(Deque<Card> playerCards, Deque<Card> compCards, Player player1) {
+        while(compCards.size() != 24 && playerCards.size() != 24){
+            if((compCards.size() == 1 && compCards.getLast().getCardSeniority() == playerCards.getFirst().getCardSeniority())
+                    ||(playerCards.size() == 1 && playerCards.getLast().getCardSeniority() == compCards.getFirst().getCardSeniority())){
+                break;
             }
-        if(playerCards.size() == 24){
-            System.out.println("Player 1 wins the GAME!");
-        }else if(compCards.size() == 24){
+            System.out.println(player1.getName() + " plays a " + playerCards.getFirst().getName());
+            stack.push(playerCards.removeFirst());
+            System.out.println("Computer plays a " + compCards.getFirst().getName());
+            stack.push(compCards.removeFirst());
+
+
+                    if(stack.get(1).getCardSeniority() == stack.get(0).getCardSeniority()) {
+                        while (stack.lastElement().getCardSeniority() == stack.get(stack.size() - 2).getCardSeniority()) {
+                            System.out.println("<<<IT'S A BATTLE!>>>");
+                            System.out.println(player1.getName() + " plays a " + playerCards.getFirst().getName());
+                            stack.push(playerCards.removeFirst());
+                            System.out.println("Computer plays a " + compCards.getFirst().getName());
+                            stack.push(compCards.removeFirst());
+
+            }
+            if(stack.lastElement().getCardSeniority() > stack.get(stack.size() - 2).getCardSeniority()){
+                System.out.println("Computer wins the battle!");
+                compCards.addAll(stack);
+                stack.clear();
+                }else{
+                System.out.println(player1.getName() + " wins the battle!");
+                playerCards.addAll(stack);
+                stack.clear();
+            }
+        }               else if (stack.lastElement().getCardSeniority() > stack.get(stack.size() -2).getCardSeniority()) {
+                            System.out.println("Computer wins the battle!");
+                            compCards.addLast(stack.get(1));
+                            compCards.addLast(stack.get(0));
+                            stack.clear();
+                                }else if (stack.lastElement().getCardSeniority() < stack.get(stack.size() - 2).getCardSeniority()) {
+                                    System.out.println(player1.getName() + " wins the battle!");
+                                    playerCards.addLast(stack.get(1));
+                                    playerCards.addLast(stack.get(0));
+                                    stack.clear();
+                                }
+                             }
+        if(compCards.size() == 24 && playerCards.size() != 24){
             System.out.println("Computer wins the GAME!");
+        }else{
+            System.out.println(player1.getName() +" wins the GAME!");
         }
     }
 }
+
 

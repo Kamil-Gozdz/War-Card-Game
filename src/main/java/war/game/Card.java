@@ -28,10 +28,7 @@ public class Card {
     public static List<Integer> valuesOfSeniority(){
         return Arrays.asList(6,5,4,3,2,1);
     }
-
-    @Override
-    public String toString() {
-        return name;
-    }
 }
+
+
 

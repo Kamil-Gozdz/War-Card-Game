@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Game {
     public static void main(String[] args) {
-        Player player1;
-        Player player2;
+        Player player1 = null;
+        Player player2 =null;
         int choice;
         GameFunctions gameFunctions =new GameFunctions();
         Scanner scanner = new Scanner(System.in);
@@ -48,7 +48,7 @@ public class Game {
         gameFunctions.shuffleDeck(deck);
         Deque<Card> playerCards = gameFunctions.cardsForPlayer(deck);
         Deque<Card> compCards = gameFunctions.cardsForComp(deck);
-        gameFunctions.battle(playerCards,compCards);
+        gameFunctions.cardPlaying(playerCards,compCards,player1);
 
 
 

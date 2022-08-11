@@ -6,7 +6,7 @@ import java.util.Deque;
 public class Player {
 
     private String name;
-    private Deque<Card> playerCards = new ArrayDeque<>(24) ;
+
 
     public Player(String name) {
         this.name = name;
@@ -16,7 +16,7 @@ public class Player {
         return name;
     }
 
-    public Deque<Card> getCards() {
-        return playerCards;
-    }
+
+
+
 }

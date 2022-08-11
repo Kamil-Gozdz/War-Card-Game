@@ -12,7 +12,8 @@ public interface GameRepository {
  Deque<Card> cardsForPlayer (ArrayList<Card> deck);
  Deque<Card> cardsForComp (ArrayList<Card> deck);
 
- void battle(Deque<Card> playerCards,Deque<Card> compCards);
+
+ void cardPlaying(Deque<Card> playerCards,Deque<Card> compCards,Player player1);
 
 
 }
